@@ -59,7 +59,8 @@ const Details = (props) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          alert(data.error);
+          alert(data.email);
+          setEmail1((val) => val.filter((ele) => ele==data.email))
           setValid(1);
         } else {
           alert(`${email} is Available`);

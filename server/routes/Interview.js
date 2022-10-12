@@ -71,6 +71,7 @@ function userAvailable(body, meetingId, res) {
     if (!savedUser1) {
       return res.status(422).json({
         error: "Invalid email",
+        email: email
       });
     }
     let user1Available = true;
