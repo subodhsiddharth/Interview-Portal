@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { Button , Container,TextField , InputLabel} from '@material-ui/core';
 import { Input } from '@mui/material';
 import { Typography , Alert , AlertTitle} from '@mui/material';
@@ -6,6 +7,7 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 
 const Details = (props) => {
+  const history = useHistory();
   var today = new Date().toISOString().split("T")[0];
   const [title, setTitle] = useState("");
   const [email1, setEmail1] = useState([]);
@@ -32,14 +34,14 @@ const Details = (props) => {
   function addParticipant(e) {
     e.preventDefault();
     if (!email1.includes(email)) {
-      setEmail1([...email1, email]);
+      setEmail1([...email1, email.trim()]);
       setEmail("");
     }
   }
 
   async function ValidateParticipant(e, email) {
     e.preventDefault();
-    console.log("hi" , email)
+    
     let path = "/" + "check";
     if (props.meetingId !== undefined) {
       path += "/" + props.meetingId;
@@ -59,8 +61,8 @@ const Details = (props) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          alert(data.email);
-          setEmail1((val) => val.filter((ele) => ele==data.email))
+          alert(`${data.email} is invalid`);
+          setEmail1((val) => val.filter((ele) => ele!=data.email))
           setValid(1);
         } else {
           alert(`${email} is Available`);
@@ -70,6 +72,7 @@ const Details = (props) => {
   }
 
   async function validator(e) {
+
     email1.forEach((email) => {
       try {
         ValidateParticipant(e, email);
@@ -91,7 +94,6 @@ const Details = (props) => {
         .then((res) => res.json())
         .then((data) => {
           data = data.meeting;
-          console.log("asdfsadf");
           let start = calTime(data.startTime);
           let end = calTime(data.endTime);
           setTitle(data.title);
@@ -134,13 +136,13 @@ const Details = (props) => {
           alert(data.error);
         } else {
           alert("Succesfully Interview Scheduled");
+          history.push("/");
         }
       })
       .catch((err) => {
         console.log(err);
       });
   }
-
   return (
     <>
     <div id="details">

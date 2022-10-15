@@ -50,7 +50,7 @@ function sendEmail(title, date, startString, endString, email, meetingId) {
     });
 }
 function userAvailable(body, meetingId, res) {
-  console.log(body, meetingId);
+  // console.log(body, meetingId);
   let { date, email, startTime, endTime } = body;
   if (!date || !email || !startTime || !endTime) {
     console.log(date, email, startTime, endTime);
@@ -58,6 +58,7 @@ function userAvailable(body, meetingId, res) {
       error: "Please add all the fields",
     });
   }
+  
   let startString = startTime;
   let endString = endTime;
   startTime = timeToNumber(startString);
@@ -68,6 +69,7 @@ function userAvailable(body, meetingId, res) {
       .json({ error: "end time cannot be smaller than start time" });
   }
   User.findOne({ email: email }).then((savedUser1) => {
+    console.log("helli",savedUser1);
     if (!savedUser1) {
       return res.status(422).json({
         error: "Invalid email",

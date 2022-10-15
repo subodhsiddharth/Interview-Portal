@@ -17,7 +17,6 @@ const InterviewList = () => {
       .then((res) => res.json())
       .then((data) => {
         setData(data.meetings);
-        console.log(data.meetings);
       })
       .catch((err) => {
         console.log(err);
