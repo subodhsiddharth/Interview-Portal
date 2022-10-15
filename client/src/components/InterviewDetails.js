@@ -62,7 +62,11 @@ const Details = (props) => {
       .then((data) => {
         if (data.error) {
           alert(`${data.email} is invalid`);
+<<<<<<< HEAD
           setEmail1((val) => val.filter((ele) => ele!=data.email))
+=======
+          setEmail1((val) => val.filter((ele) => ele==data.email));
+>>>>>>> 95145ae66be5f089bc97af82247e2f8a769b4885
           setValid(1);
         } else {
           alert(`${email} is Available`);
